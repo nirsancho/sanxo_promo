@@ -17,11 +17,13 @@
     <link rel="stylesheet" href="css/jquery.dataTables.min.css" />
 
 
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
-<style>
-    .ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
-        background-color: #E6FFEA;
-    }
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
+    <style>
+        .ui-overlay-a,
+        .ui-page-theme-a,
+        .ui-page-theme-a .ui-panel-wrapper {
+            background-color: #E6FFEA;
+        }
     </style>
 </head>
 
@@ -58,7 +60,11 @@
     <script type="text/javascript" charset="utf-8" src="js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="../js/jquery.mobile.simpledialog2.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/moment.js"></script>
-
+    <script>
+        globals = {}
+        globals.app_name = "*"
+        globals.google_analytics = "UA-56920705-3"
+    </script>
     <script type="text/javascript" charset="utf-8" src="../js/loader.js"></script>
     <script type="text/javascript" charset="utf-8" src="../js/loader.js"></script>
     <script type="text/javascript" charset="utf-8" src="../js/lang-es.js"></script>
@@ -82,10 +88,36 @@
         }
     </style>
 
+    <div data-role="page" id="page-applist">
+        <div data-role="header" data-theme="b">
+            <h1 data-role="page-title">Seleccionar App</h1>
+        </div>
+        <div data-role="content">
+            <div>
+                <label for="select-native-2">Apps disponibles:</label>
+                <select name="app-list" id="app-list" data-mini="true">
+                </select>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div data-role="controlgroup" data-type="horizontal" data-mini="true">
+                            <button id="cmd-addapp" data-text="general-add"></button>
+                            <button id="cmd-renameapp" data-text="general-rename"></button>
+                            <button id="cmd-removeapp" data-text="general-remove"></button>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <a id="cmd-selectapp" data-text="general-next" href="#" class="ui-shadow ui-btn ui-corner-all ui-btn-b ui-mini"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div data-role="page" id="page-contacts">
         <div data-role="header" data-theme="b">
-            <h1 data-role="page-title">Contact browser</h1>
+            <h1 data-role="page-title"><span class="app_name"></span>Contact browser</h1>
             <a data-text="webapp-editor" href="#page-editor" class="ui-btn"></a>
+            <a data-text="webapp-applist" href="#page-applist" class="ui-btn"></a>
         </div>
         <div style="margin:15px">
             <b>Users:</b> Allowed:<span data-text="user_count_allowed"></span>, Total: <span data-text="user_count_total"></span>
@@ -101,8 +133,9 @@
 
     <div data-role="page" id="page-editor">
         <div data-role="header" data-theme="b">
-            <h1 data-role="page-title">Editor</h1>
+            <h1 data-role="page-title"><span class="app_name"></span>Editor</h1>
             <a data-text="webapp-contactos" href="#page-contacts" class="ui-btn"></a>
+            <a data-text="webapp-applist" href="#page-applist" class="ui-btn"></a>
         </div>
         <div data-role="content">
             <select id="pages"></select>
@@ -146,7 +179,7 @@
 -->
             </div>
 
-            <img id="page-image-preview" src="" style="max-width:100%"/>
+            <img id="page-image-preview" src="" style="max-width:100%" />
 
             <button id="cmd-save" data-text="general-save"></button>
         </div>

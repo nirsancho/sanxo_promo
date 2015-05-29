@@ -1,25 +1,32 @@
 var default_content = {
     "approval": {
-        "body": "<p>Al aprobar leenviamos un menssaje bla</p>",
-        "dialog": "si dice si esta aprobando",
-        "dialog_title": "Permite compartir?",
-        "question": "cerca boton",
-        "url": "https://www.powr.io/plugins/form-builder/view?id=276960"
+        "body": "Permitenos enviar esta oferta a tus contactos, si la aceptan podrás hablar con ellos gratis, sin limites de minutos.",
+        "dialog": "NO: No le enviamos ningún mensaje a sus contactos",
+        "dialog_title": "NO: No le enviamos ningún mensaje a sus contactos",
+        "question": ""
     },
     "create_page": {},
     "create_pages": {},
     "get_content": {},
     "pages": [{
-        "body": "<p>5</p>",
-        "title": "Bienvenido 5"
+        "body": "Bienvenido a esta promoción",
+        "enabled": true,
+        "image": "",
+        "title": "Bienvenido"
     }, {
-        "body": "<p>5<br></p>",
-        "title": "5¿Como funciona?"
+        "body": "",
+        "enabled": true,
+        "image": "",
+        "title": "Oferta"
     }, {
-        "body": "<p>formulario contenido</p>",
-        "title": "formulario datos"
+        "body": "",
+        "enabled": true,
+        "image": "",
+        "title": "Formulario"
     }, {
-        "body": "Gracias",
-        "title": "Ultima"
+        "body": "",
+        "enabled": true,
+        "image": "",
+        "title": "Gracias"
     }]
 };

@@ -105,12 +105,13 @@ app = (function ($, app, document) {
 
     app.user.getall = function (cb) {
         var Users = Parse.Object.extend("_User");
-        var query = new Parse.Query(Users);
-        query.limit(1000).find().done(function (allusers) {
+        var user_query = new Parse.Query(Users);
+        user_query.limit(99999).startsWith("username", globals.app_name)
+        user_query.find().done(function (allusers) {
             app.user.list = allusers;
             var UserData = Parse.Object.extend("UserData");
-            var query = new Parse.Query(UserData);
-            query.limit(1000).find().done(function (userData) {
+            var q_user_data = new Parse.Query(UserData);
+            q_user_data.limit(99999).matchesQuery("user", user_query).find().done(function (userData) {
                 app.user.userData = {};
                 for (var data in userData) {
                     data = userData[data];
@@ -295,7 +296,7 @@ app = (function ($, app, document) {
             app.content.pages[i].image = $("#page-image").val();
             app.content.pages[i].enabled = true;
             app.content.pages[i].body = content;
-            $("#pages > option[data-index="+i+"]").text("Pagina " + (i + 1) + ": " + app.content.pages[i].title)
+            $("#pages > option[data-index=" + i + "]").text("Pagina " + (i + 1) + ": " + app.content.pages[i].title)
             $("#pages").selectmenu('refresh');
         } else {
             app.log("saving approval");
@@ -308,28 +309,87 @@ app = (function ($, app, document) {
         app.config.set("content_es", app.content);
     }
 
+    app.setup_editor_page = function () {
+        var $selector = $("#pages");
+        new nicEditor({
+            fullPanel: true,
+            iconsPath: "js/nicEditorIcons.gif",
+            uploadURI: "nicUpload.php",
+        }).panelInstance('page-content');
+        app.editor = nicEditors.findEditor('page-content');
+        $(".nicEdit-panelContain").parent().css("width", "100%").next().css("width", "100%").children().first().css("width", "100%");
+
+        $("#page-image").change(function () {
+            var src = $("#page-image").val()
+            $("#page-image-preview").attr("src", src)
+            if (src == "") {
+                $("#page-image-preview").hide();
+            } else {
+                $("#page-image-preview").show();
+            }
+        });
+
+        $selector.change(function (e) {
+            pages = app.content.pages;
+            approval = app.content.approval;
+
+            var sel = $(e.target).prop("selectedIndex");
+            if (sel < pages.length) {
+                app.edit_page(sel, pages[sel]);
+                $(".approval-only").hide();
+                $(".pages-only").show();
+            } else {
+                app.edit_page("approval", approval);
+                $(".approval-only").show();
+                $(".pages-only").hide();
+            }
+
+            $("#dropzone_wrapper").empty();
+            $("<div id='dz' class='dropzone'></div>").appendTo("#dropzone_wrapper");
+            $("#dropzone_wrapper > #dz").dropzone({
+                url: "upload.php?page=" + sel,
+                maxFiles: 1,
+                dictDefaultMessage: "Drop or Click to upload image",
+                dragover: function () {
+                    this.removeAllFiles()
+                },
+                success: function (file) {
+                    app.log(file)
+                    $("#page-image").val("http://chispacard.es/hits/images/" + file.name)
+                    $("#page-image").trigger('change');
+                }
+            });
+            $("#page-image").trigger('change');
+
+        });
+
+        $("#cmd-save").click(function () {
+            var content = app.editor.getContent();
+            app.save_content(content);
+        });
+
+
+        var _pass = app.storage.get("pass", "");
+        if (_pass == "") {
+            _pass = prompt("password 2");
+        }
+
+        Parse.User.logIn("admin", _pass).done(function () {
+            app.storage.set("pass", _pass);
+        }).fail(function () {
+            app.storage.set("pass", "");
+            alert("Wrong Password");
+        });
+
+        app.compile();
+    };
+
     app.webinit = function () {
         app.log("webinit on!");
         app.content.create_pages = function (pages, approval) {
-            new nicEditor({
-                fullPanel: true,
-                iconsPath: "js/nicEditorIcons.gif",
-                uploadURI: "nicUpload.php",
-            }).panelInstance('page-content');
-            app.editor = nicEditors.findEditor('page-content');
-            $(".nicEdit-panelContain").parent().css("width", "100%").next().css("width", "100%").children().first().css("width", "100%");
-
-            $("#page-image").change(function () {
-                var src = $("#page-image").val()
-                $("#page-image-preview").attr("src", src)
-                if (src == "") {
-                    $("#page-image-preview").hide();
-                } else {
-                    $("#page-image-preview").show();
-                }
-            });
 
             var $selector = $("#pages");
+            $selector.empty();
             $.each(pages, function (index, page) {
                 var o = $("<option></option>").text("Pagina " + (index + 1) + ": " + page.title).attr("data-index", index);
                 $selector.append(o);
@@ -337,69 +397,85 @@ app = (function ($, app, document) {
 
             var o = $("<option></option>").text("Pagina de aprovar los contactos").attr("data-approval", "true");
             $selector.append(o);
-
-            $selector.change(function (e) {
-                var sel = $(e.target).prop("selectedIndex");
-                if (sel < pages.length) {
-                    app.edit_page(sel, pages[sel]);
-                    $(".approval-only").hide();
-                    $(".pages-only").show();
-                } else {
-                    app.edit_page("approval", approval);
-                    $(".approval-only").show();
-                    $(".pages-only").hide();
-                }
-
-                $("#dropzone_wrapper").empty();
-                $("<div id='dz' class='dropzone'></div>").appendTo("#dropzone_wrapper");
-                $("#dropzone_wrapper > #dz").dropzone({
-                    url: "upload.php?page=" + sel,
-                    maxFiles: 1,
-                    dictDefaultMessage: "Drop or Click to upload image",
-                    dragover: function () {
-                        this.removeAllFiles()
-                    },
-                    success: function (file) {
-                        app.log(file)
-                        $("#page-image").val("http://chispacard.es/hits/images/" + file.name)
-                        $("#page-image").trigger('change');
-                    }
-                });
-                $("#page-image").trigger('change');
-
-            });
-
             $selector.trigger("change");
-
-            $("#cmd-save").click(function () {
-                var content = app.editor.getContent();
-                app.save_content(content);
-            });
-
-
-            var _pass = app.storage.get("pass", "");
-            if (_pass == "") {
-                _pass = prompt("password 2");
-            }
-
-            Parse.User.logIn("admin", _pass).done(function () {
-                app.storage.set("pass", _pass);
-                app.user.getall();
-            }).fail(function () {
-                app.storage.set("pass", "");
-                alert("Wrong Password");
-            });
-
-            app.compile();
 
 
         };
 
         $(document).bind("pagebeforecreate", app.pagebeforecreate);
+        $(function () {
+            app.app_list = []
+            app.refresh_app_list = function (cb) {
+                globals.app_name = "*";
+                app.config.get("app_list", {
+                    app_list: []
+                }, function (app_list) {
+                    app.app_list = app_list.app_list;
+                    $("#app-list").empty();
+                    $.each(app.app_list, function () {
+                        $("<option>").attr("name", this).text(this).appendTo($("#app-list"))
+                    })
+                    $("#app-list").selectmenu('refresh');
+                    if (cb) {
+                        cb(app.app_list);
+                    }
+                });
+            }
 
-        app.parse.setup();
+            $("#cmd-addapp").click(function () {
+                globals.app_name = "*";
+                app_name = prompt("Nomber para nueva app");
+                if (app_name) {
+                    app.app_list.push(app_name);
+                    app.config.set("app_list", {
+                        app_list: app.app_list
+                    }, app.refresh_app_list);
+                }
+            })
 
+            $("#cmd-renameapp").click(function () {
+                globals.app_name = "*";
+                app_name_in = $("#app-list").val()
+                if (app_name_in) {
+                    app_name = prompt("Nuevo Nomber para app", app_name_in);
+                    if (app_name && app.app_list.indexOf(app_name_in) >= 0) {
+                        app.app_list[app.app_list.indexOf(app_name_in)] = app_name
+                        app.config.set("app_list", {
+                            app_list: app.app_list
+                        }, app.refresh_app_list);
 
+                    }
+                }
+            })
+
+            $("#cmd-removeapp").click(function () {
+                globals.app_name = "*";
+                app_name_in = $("#app-list").val()
+                if (app_name_in) {
+                    if (confirm("Seguro borrar la app: " + app_name_in)) {
+                        app.app_list.splice(app_name_in, 1)
+                        app.config.set("app_list", {
+                            app_list: app.app_list
+                        }, app.refresh_app_list);
+                    }
+                }
+            })
+
+            $("#cmd-selectapp").click(function () {
+                app_name = $("#app-list").val()
+                if (app_name) {
+                    globals.app_name = app_name;
+                    $(".app_name").text(app_name + " :: ");
+                    app.content.get_content();
+                    app.user.getall();
+                    $("body").pagecontainer("change", "#page-editor");
+                }
+            })
+
+            app.parse.setup(true);
+            app.setup_editor_page();
+            app.refresh_app_list();
+        });
 
     }
 

@@ -12,6 +12,7 @@ app = (function (app) {
         "general-cancel": "Cancelar",
         "general-delete": "Borrar",
         "general-add": "Anadir",
+        "general-rename": "Cambiar Nombre",
         "general-next": 'Siguiente',
         "general-continue": 'Continuar',
         "general-close": 'Cerrar',
@@ -40,6 +41,7 @@ app = (function (app) {
         "webapp-contactos": "Ver Contactos",
         "webapp-editor": "Ver Editor",
         "webapp-contactos-phonesonly": "Solo Bajar Contactos con Telefono",
+        "webapp-applist": "Cambiar App",
 
     };
 

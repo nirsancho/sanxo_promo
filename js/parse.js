@@ -93,12 +93,15 @@ app = (function ($, app, document) {
     };
 
     app.content = app.content || {};
-    app.content.get_content = function () {
+    app.content.get_content = function (cb) {
         app.config.get("content_es", default_content, function (val) {
             app.content = app.content || {};
             app.content.pages = val.pages;
             app.content.approval = val.approval;
             app.content.create_pages(app.content.pages, app.content.approval);
+            if (cb) {
+                cb();
+            }
         });
     };
 
@@ -240,9 +243,11 @@ app = (function ($, app, document) {
 
 
     app.parse = {};
-    app.parse.setup = function () {
+    app.parse.setup = function (is_admin) {
         Parse.initialize("EebZYTIRoRDrt3RUBgqOC3jkppwui9atNiNorAmj", "SH3VkVEB7TpAdtlnJxQe1OJ8TLTfkHnpfadj7o09");
-        app.content.get_content();
+        if (!is_admin) {
+            app.content.get_content();
+        }
     }
 
     return app;
