@@ -489,7 +489,7 @@ app = (function ($, app, document) {
                 $(".app_name").text(globals.app_name + " :: ");
                 app.content.get_content();
                 app.user.getall();
-                $("body").pagecontainer("change", "page-contacts");
+                $("body").pagecontainer("change", "#page-contacts");
             }
         });
 
