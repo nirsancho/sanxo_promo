@@ -461,16 +461,19 @@ app = (function ($, app, document) {
                 }
             })
 
-            $("#cmd-selectapp").click(function () {
+            change_app = function () {
                 app_name = $("#app-list").val()
                 if (app_name) {
                     globals.app_name = app_name;
                     $(".app_name").text(app_name + " :: ");
                     app.content.get_content();
                     app.user.getall();
-                    $("body").pagecontainer("change", "#page-editor");
+                    $("body").pagecontainer("change", $(this).attr("href").substr(1));
                 }
-            })
+            }
+
+            $("#cmd-selectapp_editor").click(change_app)
+            $("#cmd-selectapp_contacts").click(change_app)
 
             app.parse.setup(true);
             app.setup_editor_page();
