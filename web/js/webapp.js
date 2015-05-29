@@ -461,6 +461,10 @@ app = (function ($, app, document) {
                 }
             })
 
+//            $(".webapp-applist").click(function() {
+//
+//            })
+
             change_app = function () {
                 app_name = $("#app-list").val()
                 if (app_name) {
@@ -478,6 +482,13 @@ app = (function ($, app, document) {
             app.parse.setup(true);
             app.setup_editor_page();
             app.refresh_app_list();
+
+            if (app.storage.get("app_name", "") != "") {
+                globals.app_name = app.storage.get("app_name", "")
+                app.content.get_content();
+                app.user.getall();
+                $("body").pagecontainer("change", "page-contacts");
+            }
         });
 
     }
