@@ -11,7 +11,7 @@ app = (function (app) {
         "general-save": "Guardar",
         "general-cancel": "Cancelar",
         "general-delete": "Borrar",
-        "general-add": "Anadir",
+        "general-add": "Añadir",
         "general-rename": "Cambiar Nombre",
         "general-next": 'Siguiente',
         "general-continue": 'Continuar',
