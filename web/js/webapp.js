@@ -486,6 +486,7 @@ app = (function ($, app, document) {
 
             if (localStorage.hasOwnProperty("app_name")) {
                 globals.app_name = localStorage["app_name"]
+                $(".app_name").text(globals.app_name + " :: ");
                 app.content.get_content();
                 app.user.getall();
                 $("body").pagecontainer("change", "page-contacts");
