@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+    <head></head>
+
+    <body>
+        <div data-role="page" id="page-docs-new">
+            <div data-role="header" data-theme="b">
+                <h1 data-text="docs-new-header"></h1>
+                <a href="#" data-rel="back" data-icon="back" data-text="general-back"></a>
+            </div>
+            <div data-role="content">
+                <input type="text" value="" data-text-placeholder="docs-new-client-name" data-bind="enable: status() == 'new', value: clientName, valueUpdate: 'afterkeydown'" data-mini="true" />
+                <div id="client-list-wrapper" style="max-height: 110px; overflow-y: auto; display: none">
+                    <ul id="client-list" data-mini="true" data-role="listview" data-theme="c" data-bind="foreach: clientsModel.clients" data-inset="true" data-icon="check">
+                        <li><a href="#" data-bind="text: name, click: $parent.selectClient"></a><p data-bind="text: contactData()" style="display: none"></p></li>
+                    </ul>
+                </div>
+                <div class="ui-grid-a" data-bind="visible: status() == 'new'">
+                    <div class="ui-block-a">
+                        <div data-bind='visible: clientsModel.selectedClient.idClient().length > 0 && clientsModel.selectedClient.name() == clientName()'>
+                            <button type="button" data-theme="e" data-text="docs-new-client-edit" data-bind='click: clientEdit' data-mini="true"></button>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <button type="button" data-theme="d" data-text="docs-new-client-create" data-bind='click: clientCreate' data-mini="true"></button>
+                    </div>
+                </div>
+                <h4 class="h4">
+                    <span data-text="docs-new-receipt-num"></span>
+                    <span data-bind="text: docNum"></span>
+                </h4>
+                <div>
+                    <p>
+                        <span data-text="docs-new-date"></span>
+                        <span data-bind="text: app.utils.formatDate(emissionDate())"></span>
+                        <button data-bind="click: function(){$('#emissionDateWrapper').show()}" data-inline="true" data-mini="true" data-text="docs-new-date-change"></button>
+                    </p>
+                    <div  id="emissionDateWrapper" style="display: none">
+                        <input type="date" data-clear-btn="false" data-bind="value: emissionDate"/>
+                    </div>
+                </div>
+                <div id="docs-new-items" data-bind="template: { foreach: docItems, as: 'docItem', afterRender: afterRender }">
+                    <div style="border:1px solid gray;border-radius:0.5em; padding:10px; margin-top:10px" data-name='divDocItem' data-bind="attr: {'data-index': $index}">
+                        <h4 class="h4">
+                            <span data-text="docs-new-client-item-title"></span>
+                            <span style="margin-right:0.2em" data-bind='text: index'></span>
+                        </h4>
+                        <fieldset class="ui-grid-pareto">
+                            <div class="ui-block-a">
+                                <input type="text" value="" data-name='docItemName' data-bind="enable: $root.status() == 'new', value: name, valueUpdate: 'afterkeydown'" data-text-placeholder="docs-new-client-item-name" data-mini="true" />
+                            </div>
+                            <div class="ui-block-b" data-bind="visible: $root.status() == 'new'">
+                                <button type="button" data-theme="d" data-bind="click: $root.itemListShow.bind($index)" data-text="docs-new-client-item-list" data-mini="true"></button>
+                            </div>
+                        </fieldset>
+                        <div data-name="item-list-wrapper" style="max-height: 200px; overflow-y: auto; display: none">
+                            <ul data-name="item-list" data-mini="true" data-role="listview" data-theme="c" data-bind="foreach: app.vars.items.items" data-inset="true" data-icon="check">
+                                <li><a href="#" data-bind="text: name, click: $root.selectItem.bind($data, docItem)"></a></li>
+                            </ul>
+                        </div>
+                        <fieldset class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <label for="item-count_0" class="" data-text="docs-new-client-item-count"></label>
+                                <input type="number" name="item-count_0" id="item-count_0" value="1" data-bind="enable: $root.status() == 'new', value: quantity" data-mini="true" />
+                            </div>
+                            <div class="ui-block-b">
+                                <label for="item-price_0" class="" data-text="docs-new-client-item-price"></label>
+                                <input type="number" name="item-price_0" id="item-price_0" value="0" data-bind="enable: $root.status() == 'new', value: price" data-mini="true" />
+                            </div>
+                        </fieldset>
+                        <fieldset class="ui-grid-pareto">
+                            <div class="ui-block-a">
+                                <span data-text="docs-new-item-subtotal"></span>
+                                <span style="margin-right:0.2em" data-bind='text: app.utils.formatCurrency(subtotal())'></span>
+                            </div>
+                            <div class="ui-block-b" data-bind="visible: $root.status() == 'new'">
+                                <button type="button"  data-icon="delete" data-mini="true" data-theme="a" data-text="docs-new-item-remove" data-bind='click: $parent.remove' ></button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <fieldset class="ui-grid-pareto" data-bind="visible: $root.status() == 'new'">
+                    <div class="ui-block-a">
+
+                    </div>
+                    <div class="ui-block-b">
+                        <button type="button" data-mini="true" data-theme="e" data-text="docs-new-item-add" data-bind='click: add'></button>
+                    </div>
+                </fieldset>
+
+                <div style="border:1px solid gray;border-radius:0.5em; padding:10px; margin-top:10px; ">
+                    <table class="docs-total">
+                        <tr>
+                            <td><span data-text="docs-new-total-no-vat"></span>
+                            </td>
+                            <td><span data-bind='text: app.utils.formatCurrency(grandTotal())'></span>
+                            </td>
+                        </tr>
+                        <tr data-bind="visible: app.vars.settings.financeAddVat() == 'yes'">
+                            <td><span data-text="docs-new-total-vat"></span>
+                            </td>
+                            <td><span data-bind='text: app.utils.formatCurrency(grandTotalWithVat() - grandTotal())'></span>
+                            </td>
+                        </tr>
+                        <tr data-bind="visible: app.vars.settings.financeAddVat() == 'yes'">
+                            <td><span data-text="docs-new-total-with-vat"></span>
+                            </td>
+                            <td><span  data-bind='text: app.utils.formatCurrency(grandTotalWithVat())'></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div>
+                    <div data-bind="template: { foreach: payments, afterRender: afterRender }">
+                        <div style="border:1px solid gray;border-radius:0.5em; padding:10px; margin-top:10px; ">
+                            <fieldset class="ui-grid-a">
+                                <div class="ui-block-a">
+                                    <label data-text="payment-type"></label>
+                                </div>
+                                <div class="ui-block-b">
+                                    <button type="button" data-icon="delete" data-mini="true" data-theme="a" data-text="payments-remove" data-bind="click: $parent.paymentRemove"></button>
+                                </div>
+                            </fieldset>
+                            <select data-bind="value: type">
+                                <option value="cash" data-text="payment-type-cash"></option>
+                                <option value="bank" data-text="payment-type-bank"></option>
+                                <option value="check" data-text="payment-type-check"></option>
+                                <option value="card" data-text="payment-type-card"></option>
+                            </select>
+
+                            <label data-text="payment-amount"></label>
+                            <input type='number' data-bind='value: amount' data-text-placeholder='payment-amount'/>
+
+                            <div data-bind="visible: type() == 'check'">
+                                <input type='number' data-bind='value: checkNum' data-text-placeholder='payment-checkNum'/>
+                                <input type='number' data-bind='value: checkBank' data-text-placeholder='payment-checkBank'/>
+                                <input type='date' data-bind='value: checkDate' data-text-placeholder='payment-checkDate'/>
+                            </div>
+                            <div data-bind="visible: type() == 'card'">
+                                <input type='text' data-bind='value: cardType' data-text-placeholder='payment-cardType'/>
+                                <input type='number' data-bind='value: cardNum' data-text-placeholder='payment-cardNum'/>
+                                <input type='month' data-bind='value: cardDate' data-text-placeholder='payment-cardDate'/>
+                            </div>
+                            <div data-bind="visible: type() == 'bank'">
+                                <input type='text' data-bind='value: bankBranch' data-text-placeholder='payment-bankBranch'/>
+                                <input type='text' data-bind='value: bankAccount' data-text-placeholder='payment-bankAccount'/>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" data-theme="c" data-text="payments-add" data-bind="click: paymentAdd"></button>
+                </div>
+
+                <div>
+                    <button type="button" data-theme="d" data-text="docs-new-create" data-bind="click: save"></button>
+                </div>
+
+            </div>
+            <div data-role="popup" id="popupClientValidation" data-overlay-theme="a" data-theme="c"  style="width:90%;" class="ui-corner-all">
+                <div data-role="header" data-theme="b" class="ui-corner-top">
+                    <h1 style="margin-left: 0px; margin-right: 0px" data-text="validation-client-title"></h1>
+                </div>
+                <div  data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+                    <ol id="popupClientValidationContent" ></ol>
+                    <a href="#" data-text="validation-client-cmd" data-role="button" data-rel="back" data-bind="click: clientCreateOrEdit" data-theme="e"></a>
+                    <a href="#" data-text="general-back" data-role="button" data-rel="back" data-theme="c"></a>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

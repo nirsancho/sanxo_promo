@@ -1,0 +1,4 @@
+node.exe node_modules\weinre\weinre --boundHost -all-
+
+C:\Program Files\nodejs\node.exe node_modules\weinre\weinre --boundHost -all- --httpPort 1234
+while [ true ] ; do date ; git pull ; sleep 20; done

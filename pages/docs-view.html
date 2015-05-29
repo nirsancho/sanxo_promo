@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+    <head></head>
+
+    <body>
+        <div data-role="page" id="page-docs-view">
+            <div data-role="header" data-theme="b">
+                <a href="#" data-rel="back" data-icon="back" data-text="general-back"></a>
+                <h1 data-text="docs-view-header"></h1>
+                <a href="#" data-icon="plus" data-text="general-new" data-theme="e" data-bind="click: create, visible: docs().length > 0"></a>
+            </div>
+
+            <ul data-role="listview" data-theme="c" data-filter-placeholder="חיפוש..." data-divider-theme="d" data-filter="true" data-bind="visible: docs().length > 0, foreach: docs" style="display: none;">
+                <li>
+                    <a data-bind="click: $parent.edit" >
+                        <h3>
+                            <span data-bind="text: client.name"></span>
+                        </h3>
+                        <p>
+                            <span data-text="docs-new-receipt-num"></span>
+                            <span data-bind="text: docNum"></span>
+                            <span>, </span>
+                            <span data-text="docs-view-from-date"></span>
+                            <span data-bind="text: app.utils.formatDate(dateModified)"></span>
+                        </p>
+                        <p data-bind="text: app.utils.formatCurrency(total)"></p>
+                        <span class="ui-li-count" data-bind="text: app.translate(status)"></span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul data-role="listview" data-theme="c" data-divider-theme="d" data-bind="visible: docs().length == 0" style="display: none;">
+                <li data-bind="click: create" style="cursor: pointer">
+                    <button data-theme="e" data-text="docs-view-no-docs"></button>
+                </li>
+            </ul>
+        </div>
+
+    </body>
+
+</html>

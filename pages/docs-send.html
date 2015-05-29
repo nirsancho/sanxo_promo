@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div data-role="page" id="page-docs-send" >
+            <div data-role="header" data-theme="b">
+                <h1 data-text="docs-send-header"></h1>
+                <a href="#" data-rel="back" data-icon="back" data-text="general-back" id="cmdBack"></a>
+            </div>
+            <div data-role="content" style="text-align: center">
+                <div id="before-send">
+                    <h4 class="h4"><span data-text="docs-send-for-title" ></span><span data-bind="text: clientName"></span></h4>
+                    <button type="button" data-theme="e" data-text="docs-new-client-edit" data-bind='click: clientEdit' data-mini="true"></button>
+                    <h4 class="h4"><span data-text="docs-new-total-with-vat" ></span> <span data-bind="text: app.utils.formatCurrency(grandTotalWithVat())"></span></h4>
+
+                    <div id="before-send-step1">
+                        <h4 data-text="docs-sent-select-bonus"></h4>
+                        <ul data-role="listview" data-inset="true" data-bind="click: function(){$('#before-send-step1').hide();$('#before-send-step2').show();}">
+                            <li><a href="#">
+                                    <img src="../css/images/promo/demo1.jpg">
+                                    <h2>איפור</h2>
+                                    <p>הטבה בקניית איפור</p>
+                                    <p class="ui-li-aside">בשווי 20 ש"ח</p>
+                                </a></li>
+                            <li><a href="#">
+                                    <img src="../css/images/promo/demo2.jpg">
+                                    <h2>תכשיטים</h2>
+                                    <p>הטבה בקניית תכשיטים</p>
+                                    <p class="ui-li-aside">בשווי 40 ש"ח</p>
+                                </a></li>
+                            <li><a href="#">
+                                    <img src="../css/images/promo/demo3.jpg">
+                                    <h2>הנעלה</h2>
+                                    <p>הטבה בקניית נעליים</p>
+                                    <p class="ui-li-aside">בשווי 60 ש"ח</p>
+                                </a></li>
+                        </ul>
+                    </div>
+                    <div id="before-send-step2" style="display: none">
+                        <p data-text="docs-send-desc"></p>
+                        <ul id="contact-options-emails" data-mini="true" data-role="listview" data-theme="d" data-bind="foreach: clientsModel.selectedClient.emails()" data-inset="true" data-icon="check">
+                            <li data-bind="visible: email.length > 0"><a href="#" data-bind="click: $root.send.bind('email'), text: email"></a></li>
+                        </ul>
+                        <ul id="contact-options-phones" data-mini="true" data-role="listview" data-theme="d" data-bind="foreach: clientsModel.selectedClient.phones()" data-inset="true" data-icon="check">
+                            <li data-bind="visible: phone.length > 0"><a href="#" data-bind="click: $root.send.bind('phone', $data), text: phone"></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="after-send" style="display: none">
+                    <h4 class="h4" data-bind="text: clientName"></h4>
+                    <p data-text="docs-send-after"></p>
+                    <a href="app-home.html" data-role="button" data-theme="e" data-iconpos="right" data-icon="home" data-text="general-go-home"></a>
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

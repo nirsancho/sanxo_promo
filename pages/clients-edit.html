@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+    <head></head>
+
+    <body>
+        <div data-role="page" id="page-clients-edit" data-bind="with: selectedClient">
+            <div data-role="header" data-theme="b">
+                <a href="#" data-rel="back" data-theme="b" data-icon="back" data-text="general-back"></a>
+                <h1 data-text="client-editor-header"></h1>
+                <a href="#" data-icon="check" data-theme="e" data-bind="click: save" data-text="general-save"></a>
+
+            </div>
+            <div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+                <input type="text" data-bind="value: name, valueUpdate: 'afterkeydown'" data-text-placeholder="client-editor-name"/>
+                <div style="border:1px solid gray;border-radius:0.5em; padding:10px; margin-top:10px">
+                    <h4 class="h4" data-text="client-editor-email"></h4>
+                    <div data-bind="template: {foreach: emails, afterRender: $root.afterRender}">
+                        <div class="ui-grid-pareto">
+                            <div  class="ui-block-b">
+                                <select data-bind="options: $root.fieldTypes, value: type" data-mini="true">
+                                </select>
+                            </div>
+                            <div  class="ui-block-a" style="text-align: left;">
+                                <input type="email" data-bind="value: email" data-text-placeholder="client-editor-email" data-mini="true"/>
+                                <div data-role="button" data-icon="delete" data-mini="true" data-theme="a" data-text="general-delete" data-inline="true" data-bind='click: $parent.removeField.bind($data,"email")'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-role="button" data-icon="plus" data-mini="true" data-theme="e" data-text="general-add" data-bind='click: addField.bind($data,"email")'></div>
+                </div>
+                <div style="border:1px solid gray;border-radius:0.5em; padding:10px; margin-top:10px">
+                    <h4 class="h4" data-text="client-editor-phones"></h4>
+                    <div data-bind="template: {foreach: phones, afterRender: $root.afterRender}">
+                        <div class="ui-grid-pareto">
+                            <div  class="ui-block-b">
+                                <select data-bind="options: $root.fieldTypes, value: type" data-mini="true">
+                                </select>
+                            </div>
+                            <div  class="ui-block-a" style="text-align: left;">
+                                <input type="tel" data-bind="value: phone" data-text-placeholder="client-editor-phone" data-mini="true"/>
+                                <div data-role="button" data-icon="delete" data-mini="true" data-theme="a" data-text="general-delete" data-inline="true" data-bind='click: $parent.removeField.bind($data,"phone")'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-role="button" data-icon="plus" data-mini="true" data-theme="e" data-text="general-add" data-bind='click: addField.bind($data,"phone")'></div>
+                </div>
+
+                <div style="border:1px solid gray;border-radius:0.5em; padding:10px; margin-top:10px">
+                    <h4 class="h4" data-text="client-editor-addresses"></h4>
+                    <div data-bind="template: {foreach: addresses, afterRender: $root.afterRender}">
+                        <div class="ui-grid-pareto">
+                            <div  class="ui-block-b">
+                                <select data-bind="options: $root.fieldTypes, value: type" data-mini="true">
+                                </select>
+                            </div>
+                            <div  class="ui-block-a" style="text-align: left;">
+                                <input type="text" data-bind="value: address" data-text-placeholder="client-editor-address" data-mini="true"/>
+                                <div data-role="button" data-icon="delete" data-mini="true" data-theme="a" data-text="general-delete" data-inline="true" data-bind='click: $parent.removeField.bind($data,"address")'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-role="button" data-icon="plus" data-mini="true" data-theme="e" data-text="general-add" data-bind='click: addField.bind($data,"address")'></div>
+                </div>
+                <div data-bind="visible: idClient().length > 0">
+                    <button data-role="button" class="ui-block-a" data-theme="a" data-bind='click: remove' data-icon="delete" data-text="client-editor-delete"></button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </body>
+
+</html>

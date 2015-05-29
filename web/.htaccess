@@ -1,0 +1,5 @@
+AuthName "Restricted Area" 
+AuthType Basic 
+AuthUserFile /var/zpanel/hostdata/unusid/public_html/unusid_com/spark/web/.htpasswd 
+AuthGroupFile /dev/null 
+require valid-user

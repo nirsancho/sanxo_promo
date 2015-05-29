@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+
+        <div data-role="page" id="page-signup" >
+            <div data-role="header" data-theme="b">
+                <a href="#" data-rel="back" data-icon="back" data-text="general-back"></a>
+                <h1 data-text="home-cmd-settings"></h1>
+            </div>
+            <div id="step1" data-role="content">
+                <div>
+                    <h2 data-text="settings-account"></h2>
+                    <input type='email' data-bind='value: accountEmail' data-text-placeholder="settings-account-email"/>
+                    <input type='tel' data-bind='value: accountPhone' data-text-placeholder="settings-account-phone"/>
+                    <input type='password' data-bind='value: accountPassword' data-text-placeholder="settings-account-password"/>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+
+                    </div>
+                    <div class="ui-block-b">
+                        <a href="#" data-bind="click: signup" data-role="button" data-text="general-next" data-theme="e" ></a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="step2" data-role="content" style="display: none">
+                <h2 data-text="settings-business"></h2>
+                <div>
+                    <input type='text' data-bind='value: businessName, valueUpdate: "afterkeydown"' data-text-placeholder="settings-business-name"/>
+                    <textarea data-bind='value: businessDesc, valueUpdate: "afterkeydown"' data-text-placeholder="settings-business-desc"></textarea>
+                    <input type='tel' data-bind='value: businessPhone, valueUpdate: "afterkeydown"' data-text-placeholder="settings-business-tel"/>
+                    <input type='tel' data-bind='value: businessFax, valueUpdate: "afterkeydown"' data-text-placeholder="settings-business-fax"/>
+                    <input type='email' data-bind='value: businessEmail, valueUpdate: "afterkeydown"' data-text-placeholder="settings-business-email"/>
+                    <input type='text' data-bind='value: businessAddress, valueUpdate: "afterkeydown"' data-text-placeholder="settings-business-address"/>
+
+                    <select data-bind="value: businessCategory, options: app.translate('settings-business-category-options')"></select>
+
+                    <div data-bind="visible: businessName">
+                        <h4 class="h4" data-text="settings-business-demo"></h4>
+                        <h4 data-bind="text: businessName" style="font-size: 16px; margin: 20px 0px 5px 0px; padding-top: 5px; border-top: solid black 1px"></h4>
+                        <p data-bind="visible: businessDesc, text: businessDesc" style="margin: 0px"></p>
+                        <ul style="padding-top: 5px; margin-top: 5px">
+                            <li data-bind='visible: businessAddress'>
+                                <span data-text="general-address" class="label"></span><span data-bind='text: businessAddress'></span>
+                            </li>
+                            <li data-bind='visible: businessEmail'>
+                                <span data-text="general-email" class="label"></span><span data-bind='text: businessEmail'></span>
+                            </li>
+                            <li data-bind='visible: businessPhone'>
+                                <span data-text="general-phone" class="label"></span><span data-bind='text: businessPhone'></span>
+                            </li>
+                            <li data-bind='visible: businessFax'>
+                                <span data-text="general-fax" class="label"></span><span data-bind='text: businessFax'></span>
+                            </li>
+                        </ul>
+
+
+                    </div>
+
+                    <h2 data-text="settings-finance"></h2>
+                    <div>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <span  data-text="settings-finance-add-vat"></span>
+                            </div>
+                            <div class="ui-block-b">
+                                <select id="settings-finance-add-vat" data-role="slider" data-bind="slider: financeAddVat">
+                                    <option value="no"  data-text="general-no"></option>
+                                    <option value="yes" data-text="general-yes"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <span data-text="settings-finance-vat-val"></span>
+                            </div>
+                            <div class="ui-block-b">
+                                <input type='number' data-bind="value: financeVatValue"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <a href="#" data-bind='click: save.bind($data,"home")' data-theme="e" data-role="button" data-text="general-end" ></a>
+
+
+            </div>
+        </div>
+
+
+    </body>
+
+</html>

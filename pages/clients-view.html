@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+    <head></head>
+
+    <body>
+        <div data-role="page" id="page-clients-view">
+            <div data-role="header" data-theme="b">
+                <a href="#" data-rel="back" data-icon="back" data-text="general-back"></a>
+                <h1 data-text="clients-view-header"></h1>
+                <a href="#" data-icon="plus" data-text="general-add" data-theme="e" data-bind="click: create, visible: clients().length > 0"></a>
+            </div>
+            <ul data-role="listview" data-theme="c" data-filter-placeholder="חיפוש..." data-divider-theme="d" data-filter="true" data-bind="visible: clients().length > 0, foreach: clients" style="display: none;">
+                <li>
+                    <a data-bind="click: $parent.edit">
+                        <h2 data-bind="text: name"></h2>
+                        <fieldset class="ui-grid-a" style="font-size: 12px; font-weight: normal">
+                            <ul class="ui-block-a" data-bind="foreach: phones">
+                                <li><span data-bind="text: phone"></span></li>
+                            </ul>
+                            <ul class="ui-block-b" data-bind="foreach: emails">
+                                <li><span data-bind="text: email"></span></li>
+                            </ul>
+                        </fieldset>
+                    </a>
+                </li>
+            </ul>
+            <ul data-role="listview" data-theme="c" data-divider-theme="d" data-bind="visible: clients().length == 0" style="display: none;">
+                <li data-bind="click: create" style="cursor: pointer">
+                    <button data-theme="e" data-text="clients-view-no-clients"></button>
+                </li>
+                <li data-bind="click: create" style="cursor: pointer">
+                    <button data-text="clients-view-from-contacts"></button>
+                </li>
+            </ul>
+        </div>
+
+    </body>
+
+</html>

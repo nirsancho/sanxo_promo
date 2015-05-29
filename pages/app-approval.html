@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+
+        <div data-role="page" id="page-approval" >
+            <div data-role="header" data-theme="b">
+                <a href="#" data-rel="back" data-icon="back" data-text="general-back"></a>
+                <h1 data-text="home-cmd-settings"></h1>
+            </div>
+            <div data-role="content">
+                <div>
+                    <input type='email' data-bind='value: accountEmail' data-text-placeholder="settings-account-email"/>
+                    <input type='password' data-bind='value: accountPassword' data-text-placeholder="settings-account-password"/>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a href="#" data-bind="" data-role="button" data-text="signin-forgot-pass" ></a>
+                    </div>
+                    <div class="ui-block-b">
+                        <button data-bind="click: signin" data-text="welcome-signin" ></button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

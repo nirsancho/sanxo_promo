@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+    <head></head>
+
+    <body>
+        <div data-role="page" id="page-items-view">
+            <div data-role="header" data-theme="b">
+                <a href="#" data-rel="back" data-icon="back" data-text="general-back"></a>
+                <h1 data-text="items-view-header"></h1>
+                <a href="#" data-icon="plus" data-text="general-add" data-theme="e" data-bind="click: create, visible: items().length > 0"></a>
+            </div>
+
+            <ul data-role="listview" data-theme="c" data-filter-placeholder="חיפוש..." data-divider-theme="d" data-filter="true" data-bind="visible: items().length > 0, foreach: items" style="display: none;">
+                <li>
+                    <a data-bind="click: $parent.edit" class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <h4 class="h4" data-bind="text: name"></h4>
+                        </div>
+                        <div class="ui-block-b">
+                            <span style="margin-right:0.2em; font-weight: normal" data-bind='text: app.utils.formatCurrency(price())'></span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <ul data-role="listview" data-theme="c" data-divider-theme="d" data-bind="visible: items().length == 0" style="display: none;">
+                <li data-bind="click: create" style="cursor: pointer">
+                    <button data-theme="e" data-text="items-view-no-items"></button>
+                </li>
+            </ul>
+        </div>
+
+    </body>
+
+</html>

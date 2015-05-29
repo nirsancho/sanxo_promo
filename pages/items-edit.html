@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+    <head></head>
+
+    <body>
+        <div data-role="page" id="page-item-edit" data-bind="with: selectedItem">
+            <div data-role="header" data-theme="b">
+                <a href="#" data-rel="back" data-theme="b" data-icon="back" data-text="general-back"></a>
+                <h1 data-text="item-editor-header"></h1>
+                <a href="#" data-icon="check" data-theme="e" data-bind="click: save" data-text="general-save"></a>
+
+            </div>
+            <div data-role="content" data-theme="c" class="ui-corner-bottom ui-content">
+
+                <h4 class="h4" data-text="item-editor-item-name"></h4>
+                <input type="text" data-bind='value: name' data-text-placeholder="docs-new-client-item-name" data-mini="true" />
+
+                <h4 class="h4" data-text="docs-new-client-item-price"></h4>
+                <input type="number" data-bind='value: price' data-mini="true" />
+
+                <h4 class="h4" data-text="item-editor-description"></h4>
+                <textarea data-bind='text: description' data-mini="true"></textarea>
+
+                <div data-bind="visible: idItem().length > 0">
+                    <button data-role="button" class="ui-block-a" data-theme="a" data-bind='click: remove' data-icon="delete" data-text="item-editor-remove"></button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </body>
+
+</html>
