@@ -469,6 +469,7 @@ app = (function ($, app, document) {
                 app_name = $("#app-list").val()
                 if (app_name) {
                     globals.app_name = app_name;
+                    localStorage["app_name"] = app_name
                     $(".app_name").text(app_name + " :: ");
                     app.content.get_content();
                     app.user.getall();
@@ -483,8 +484,8 @@ app = (function ($, app, document) {
             app.setup_editor_page();
             app.refresh_app_list();
 
-            if (app.storage.get("app_name", "") != "") {
-                globals.app_name = app.storage.get("app_name", "")
+            if (localStorage.hasOwnProperty("app_name")) {
+                globals.app_name = localStorage["app_name"]
                 app.content.get_content();
                 app.user.getall();
                 $("body").pagecontainer("change", "page-contacts");
