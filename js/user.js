@@ -54,6 +54,7 @@ app = (function ($, app, document) {
 
     app.user.get_username_from_device = function (onSuccess) {
         app.deviceInfo = app.storage.get("deviceInfo", "");
+        app.userEmail = app.storage.get("userEmail", "");
         if (app.deviceInfo === "") {
             // set the default bailout
             app.deviceInfo = globals.app_name + ":" + app.utils.guid();
@@ -76,6 +77,8 @@ app = (function ($, app, document) {
                             i++;
                         }
                         if (userEmail !== "") {
+                            app.userEmail = userEmail;
+                            app.storage.set("userEmail", userEmail);
                             app.deviceInfo = userEmail;
                         } else if (id !== undefined && id !== "") {
                             app.deviceInfo = id;

@@ -140,9 +140,8 @@ app = (function ($, app, document) {
             //            navigator.notification.beep(1);
 
             app.user.get_username_from_device(function () {
-                if (app.deviceInfo.indexOf("@") >= 0) {
-                    $("#form-email").val(app.deviceInfo);
-                }
+                $("#form-email").val(app.userEmail);
+
 
                 app.user.login_or_signup(app.deviceInfo, function (user) {
                         app.ga.trackEvent(app.log, app.log, "App", "User Login", app.deviceInfo, 0);
