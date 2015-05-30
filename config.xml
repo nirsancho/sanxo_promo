@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.sanxopromo.promo2" version="1.0.0" versionCode="1">
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0"
+
+id="com.sanxopromo.promo2"
+
+version="1.0.0" versionCode="1">
 
     <name>Sanxo Promo 2</name>
 
     <description>
     </description>
 
-    <author href="http://chispacard.es" email="">
-    </author>
+    <author href="http://chispacard.es" email=""></author>
+
+
+
+
 
     <preference name="phonegap-version" value="3.7.0" />
     <preference name="orientation" value="portrait" />
@@ -19,7 +26,20 @@
 
     <preference name="disable-cursor" value="true" />
 
-    <icon src="icons/72.png" gap:role="default" />
+    <icon src="icons/ios/Icon-72.png" gap:role="default" />
+
+    <icon src="icons/ios/Icon-72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="icons/ios/Icon-72@2x.png" width="114" height="114" />
+
+    <icon src="icons/android/drawable-ldpi/ic_launcher.png" gap:platform="android" gap:qualifier="ldpi" />
+    <icon src="icons/android/drawable-mdpi/ic_launcher.png" gap:platform="android" gap:qualifier="mdpi" />
+    <icon src="icons/android/drawable-hdpi/ic_launcher.png" gap:platform="android" gap:qualifier="hdpi" />
+    <icon src="icons/android/drawable-xhdpi/ic_launcher.png" gap:platform="android" gap:qualifier="xhdpi" />
+
+    <icon src="icons/ios/Icon-72.png" gap:platform="blackberry" />
+
+	<!-- OLD ICONS
+	<icon src="icons/72.png" gap:role="default" />
 
     <icon src="icons/72.png" gap:platform="ios" width="72" height="72" />
     <icon src="icons/144.png" width="114" height="114" />
@@ -30,7 +50,7 @@
     <icon src="icons/144.png" gap:platform="android" gap:qualifier="xhdpi" />
 
     <icon src="icons/72.png" gap:platform="blackberry" />
-
+	-->
     <gap:plugin name="org.apache.cordova.contacts" version="0.2.13" />
     <gap:plugin name="org.apache.cordova.dialogs" version="0.2.10" />
     <gap:plugin name="com.vliesaputra.deviceinformation" version="1.0.1" />
