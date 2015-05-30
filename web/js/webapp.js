@@ -355,7 +355,7 @@ app = (function ($, app, document) {
                 },
                 success: function (file) {
                     app.log(file)
-                    $("#page-image").val("http://chispacard.es/sanxopromo/images/" + file.name)
+                    $("#page-image").val("http://chispacard.es/sanxo_promo/images/" + file.name)
                     $("#page-image").trigger('change');
                 }
             });
